@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { IUser } from "../utils/interfaces";
 import axios from "axios";
+import { BASE_URL } from "../config/config";
 
 interface State {
   users: IUser[];
@@ -23,7 +24,7 @@ export const useUsersStore = create<State>((set, get) => ({
   fetchUsers: async () => {
     set(() => ({ loading: true }));
     try {
-      const { data } = await axios.get("http://localhost:8000/user");
+      const { data } = await axios.get(BASE_URL);
       set(() => ({ users: data, error: null }));
     } catch (err: any) {
       console.log(err);
@@ -37,7 +38,7 @@ export const useUsersStore = create<State>((set, get) => ({
   deleteUser: async (userId: number) => {
     set(() => ({ loading: true }));
     try {
-      await axios.delete(`http://localhost:8000/user/${userId}`);
+      await axios.delete(`${BASE_URL}/${userId}`);
       get().fetchUsers();
     } catch (err: any) {
       console.log(err);
@@ -51,7 +52,7 @@ export const useUsersStore = create<State>((set, get) => ({
   createUser: async (userData: Omit<IUser, "id">) => {
     set(() => ({ loading: true }));
     try {
-      await axios.post(`http://localhost:8000/user`, userData);
+      await axios.post(BASE_URL, userData);
       get().fetchUsers();
     } catch (err: any) {
       console.log(err);
@@ -65,7 +66,7 @@ export const useUsersStore = create<State>((set, get) => ({
   updateUser: async (userId: number, userData: Omit<IUser, "id">) => {
     set(() => ({ loading: true }));
     try {
-      await axios.put(`http://localhost:8000/user/${userId}`, userData);
+      await axios.put(`${BASE_URL}/${userId}`, userData);
       get().fetchUsers();
     } catch (err: any) {
       console.log(err);
