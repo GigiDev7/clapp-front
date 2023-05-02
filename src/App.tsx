@@ -18,7 +18,9 @@ function App() {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "24px" }}
+      >
         Loading...
       </div>
     );
